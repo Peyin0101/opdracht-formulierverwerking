@@ -32,8 +32,11 @@ class PostsController extends Controller
         $post->title = $validated['title'];
         $post->introduction = $validated['introduction'];
         $post->content = $validated['content'];
-        $post->image = $validated['image'];
         $post->featured = $validated['featured'];
+
+        if ($request->file('image')) {
+            $post->image_path = $request->file('image')->store('images', 'public');
+        }
         $post->save();
 
         return redirect()->route('posts.index');
@@ -51,8 +54,12 @@ class PostsController extends Controller
         $post->title = $validated['title'];
         $post->introduction = $validated['introduction'];
         $post->content = $validated['content'];
-        $post->image = $validated['image'];
         $post->featured = $validated['featured'];
+
+        if ($request->file('image')) {
+            $post->image_path = $request->file('image')->store('images', 'public');
+        }
+
         $post->save();
 
         return redirect()->route('posts.show', $post);
